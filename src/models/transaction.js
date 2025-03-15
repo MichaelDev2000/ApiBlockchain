@@ -1,18 +1,17 @@
 const mongoose = require("mongoose");
 
-const TransactionSchema = new mongoose.Schema({
+const transactionSchema = new mongoose.Schema({
     user_info: {
-        first_name: { type: String, required: true },
-        last_name: { type: String, required: true },
-        email: { type: String, required: true },
-        wallet_address: { type: String, required: true },
+        first_name: String,
+        last_name: String,
+        email: String,
+        wallet_address: String
     },
-    membership: { type: mongoose.Schema.Types.ObjectId, ref: "Membresia", required: true },
-    transaction_hash: { type: String, required: true },
-    amount: { type: Number, required: true },
-    currency: { type: String, default: "ETH" },
-    status: { type: String, enum: ["pending", "completed", "failed"], default: "completed" },
+    membership: { type: mongoose.Schema.Types.ObjectId, ref: "Membresia" },
+    transaction_hash: String,
+    amount: Number,
+    currency: String,
+    status: String
 }, { timestamps: true });
 
-// ✅ Verificar si el modelo ya está definido antes de crearlo
-module.exports = mongoose.models.Transaction || mongoose.model("Transaction", TransactionSchema);
+module.exports = mongoose.model("Transaction", transactionSchema);

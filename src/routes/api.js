@@ -9,7 +9,7 @@ router.get("/membresia/:wallet", membresiaController.getMembresiaByWallet);
 router.post("/membresia/comprar", membresiaController.buyMembresia);
 
 // 🔹 Rutas de Transacciones
-router.get("/transacciones", transactionController.getAllTransactions);
+router.get("/transacciones", transactionController.getTransactions);
 router.get("/transacciones/:wallet", transactionController.getTransactionsByWallet);
 
 module.exports = router;
