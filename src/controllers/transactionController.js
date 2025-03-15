@@ -1,24 +1,25 @@
-const Transaction = require("../models/transaction");
+const Transaction = require("../models/Transaction");
 
-// Obtener todas las transacciones
-const getTransactions = async (req, res) => {
+// 🔹 Obtener todas las transacciones
+exports.getAllTransactions = async (req, res) => {
     try {
-        const transactions = await Transaction.find();
-        res.json(transactions);
+        const transactions = await Transaction.find().populate("membership");
+        res.status(200).json(transactions);
     } catch (error) {
-        res.status(500).json({ error: "Error al obtener las transacciones" });
+        res.status(500).json({ message: "Error al obtener transacciones", error });
     }
 };
 
-// Obtener transacciones por dirección de wallet
-const getTransactionsByWallet = async (req, res) => {
-    const { wallet } = req.params;
+// 🔹 Obtener transacciones de una wallet específica
+exports.getTransactionsByWallet = async (req, res) => {
     try {
-        const transactions = await Transaction.find({ from: wallet });
-        res.json(transactions);
+        const { wallet } = req.params;
+        const transactions = await Transaction.find({ "user_info.wallet_address": wallet })
+            .populate("membership"); // Aquí traemos los detalles de la membresía
+        res.status(200).json(transactions);
     } catch (error) {
-        res.status(500).json({ error: "Error al obtener las transacciones" });
+        console.error("Error al obtener transacciones:", error);
+        res.status(500).json({ message: "Error interno del servidor" });
     }
 };
 
-module.exports = { getTransactions, getTransactionsByWallet };

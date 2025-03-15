@@ -8,13 +8,11 @@ connectDB();
 const app = express();
 app.use(express.json());
 
-// Importar rutas
-const membresiaRoutes = require("./src/routes/membresiaRoutes");
-const transactionRoutes = require("./src/routes/transactionRoutes");
+// Importar archivo de rutas general
+const apiRoutes = require("./src/routes/api");
 
-// Definir rutas
-app.use("/api/membresias", membresiaRoutes);
-app.use("/api/transactions", transactionRoutes);
+// Definir rutas principales
+app.use("/api", apiRoutes);
 
 app.get("/", (req, res) => res.send("API de Blockchain funcionando 🚀"));
 
